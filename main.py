@@ -36,13 +36,30 @@ def get_bw_total_rates(base_nb_roll: int, base_wish_boost: float, is_star_wish: 
             wish_boost += 1
     return values
 
+def get_best_i(arr: list[float]) -> int:
+    best = (-1, -1)
+    for i, wish_value in enumerate(arr):
+        _, best_value = best
+        if wish_value > best_value:
+            best = (i, wish_value)
+    return best[0]
+
+
 def show_graph(base_nb_roll: int, base_wish_boost: float, base_starwish_boost: float):
     wish_values = get_bw_total_rates(base_nb_roll, base_wish_boost, False)
     starwish_values = get_bw_total_rates(base_nb_roll, base_starwish_boost, True)
+
+    best_wish = get_best_i(wish_values)
+    best_starwish = get_best_i(starwish_values)
+
     x = [i for i in range(len(wish_values))]
     plt.plot(x, wish_values, label = "wish_values")
     plt.plot(x, starwish_values, label = "starwish_values")
+
+    plt.plot(x[best_wish], wish_values[best_wish], 'ro')
+    plt.plot(x[best_starwish], starwish_values[best_starwish], 'ro')
+
     plt.legend()
     plt.show()
 
-show_graph(14, 150, 250)
+show_graph(13, 150, 250)
