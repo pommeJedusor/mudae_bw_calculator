@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
 
 MIN_NUMBER_OF_ROLL = 10
 
@@ -62,4 +61,18 @@ def show_graph(base_nb_roll: int, base_wish_boost: float, base_starwish_boost: f
     plt.legend()
     plt.show()
 
-show_graph(13, 150, 250)
+def get_int_input(text: str) -> int:
+    returned_value = input(text)
+    while not returned_value.isdigit():
+        print("input not valid")
+        returned_value = input(text)
+    return int(returned_value)
+
+def main():
+    base_nb_roll = get_int_input("how many rolls do you have available without $bw enabled?\n")
+    base_wish_boost = get_int_input("what's your wish boost % without $bw enabled?\n")
+    base_starwish_boost = base_wish_boost + get_int_input("what's your starwish boost % without $bw enabled? (excluding the boostwish part)\n")
+    show_graph(base_nb_roll, base_wish_boost, base_starwish_boost)
+
+if __name__ == "__main__":
+    main()
